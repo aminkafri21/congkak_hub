@@ -1,0 +1,75 @@
+@import url('https://fonts.cdnfonts.com/css/playfair-display');
+
+* {
+    font-family: 'Playfair Display';
+}
+
+body {
+    background-color: rgba(0, 0, 0, .3);
+    background-image: url("Images/Congkak_homepage.jpg");
+    background-blend-mode: multiply;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+}
+
+
+.main-nav li {
+    padding: 0.5em;
+    margin: 0 0.5em;
+    border-left: 2px solid rgb(55, 52, 52);
+    font-size: 1.4em;
+    color: rgb(55, 52, 52);
+    font-weight: bold;
+}
+
+.main-nav h2 {
+    margin: 0 auto 0 .5em;
+    font-size: 2.2em;
+    color: rgb(55, 52, 52);
+}
+
+.main-section {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+.desc-div {
+    text-align: center;
+    font-size: 2em;
+    color: beige;
+}
+
+.desc-div .main-title {
+    font-size: 3em;
+    border-bottom: 5px solid beige;
+}
+
+.btn-div {
+    display: flex;
+}
+
+.learn-more {
+    border: none;
+    border-radius: 10px;
+    background-color: rgba(194, 78, 78, 0.816);
+    padding: 25px 50px;
+    color: bisque;
+    font-weight: bold;
+    font-size: 1.5em;
+    cursor: pointer;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.learn-more:hover {
+    background-color: rgb(153, 53, 53);
+    padding: 30px 55px;
+}
