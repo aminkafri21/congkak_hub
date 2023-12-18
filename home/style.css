@@ -4,7 +4,7 @@
     font-family: 'Playfair Display';
 }
 
-body {
+.Home {
     background-color: rgba(0, 0, 0, .3);
     background-image: url("Images/Congkak_homepage.jpg");
     background-blend-mode: multiply;
@@ -13,7 +13,8 @@ body {
 .main-nav ul {
     display: flex;
     list-style-type: none;
-    padding: 0;
+    margin: 0;
+    padding: .5em 0;
 }
 
 
@@ -24,6 +25,15 @@ body {
     font-size: 1.4em;
     color: rgb(55, 52, 52);
     font-weight: bold;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: rgb(55, 52, 52);
+}
+
+.main-nav a:hover {
+    color: aliceblue;
 }
 
 .main-nav h2 {
