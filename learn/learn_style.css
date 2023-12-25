@@ -15,32 +15,35 @@ li {
     padding-bottom: 2em;
 }
 
-.learn-header .howto-div {
-    display: flex;
-    justify-content: center;
-    margin: 60px 50px;
-}
-
 .main-nav ul {
     margin: 0;
     padding: 1.1em 0;
 }
 
+.learn-header .howto-div {
+    margin: 60px 50px;
+}
+
+
+.howto-div ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+
+}
+
 .howto-div .how-to-txt {
     margin: 1em;
     font-size: 4em;
-    height: 100px;
     border-bottom: 2px solid #FAEED1;
-    align-self: center;
-    margin-right: auto;
     color: #FAEED1;
 }
 
 .howto-div .congkak-img-1 {
     border: none;
     border-radius: 50px;
-    margin-right: auto;
 }
+
 
 .intro-section {
     text-align: center;
