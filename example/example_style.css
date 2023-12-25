@@ -1,0 +1,85 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+.example-header {
+    background-color: blanchedalmond;
+    padding-bottom: 2%;
+}
+
+.example-header .example-div {
+    text-align: center;
+    font-size: 2.3em;
+    margin: 2em;
+}
+
+.eg-txt {
+    border-bottom: 3px solid black;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    background-color: cornsilk;
+}
+
+.vid-div {
+    display: flex;
+    justify-content: center;
+    margin: 3%;
+}
+
+.mykey {
+    align-self: center;
+    text-align: center;
+    margin: 1em;
+    margin-top: .5em;
+}
+
+.mykey img {
+    border-radius: 20px;
+}
+
+.mykey button {
+    background-color: aquamarine;
+    border: none;
+    padding: .7em;
+    padding-bottom: .3em;
+    border-radius: 20px;
+    width: 130%;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.mykey button:hover {
+    padding: 1em;
+    cursor: pointer;
+}
+
+.mykey a {
+    text-decoration: none;
+    color: blueviolet;
+}
+
+.tips-txt {
+    background-color: coral;
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 1.4em;
+    border-radius: 50px;
+    color: brown;
+}
+
+.tips-txt a {
+    text-decoration: underline;
+    color: brown;
+    font-size: 1.1em;
+}
+
+
