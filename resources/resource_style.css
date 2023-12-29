@@ -1,5 +1,7 @@
 body {
     background-color: wheat;
+    margin: 0;
+    padding: 0;
 }
 
 .resource-section {
@@ -21,12 +23,21 @@ body {
 }
 
 .logo a {
-    background-color: blanchedalmond;
     margin-right: auto;
     margin-left: auto;
-    margin-top: 2%;
+    margin-top: 1%;
     margin-bottom: 2%;
     padding: 5%;
     border: none;
     border-radius: 30px;
+}
+
+footer {
+    background-color: brown;
+    margin: 0;
+    padding: .5%;
+}
+
+footer p {
+    margin: 0;
 }
