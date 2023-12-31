@@ -1,0 +1,20 @@
+package project;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class MenuFrame$1 implements ActionListener {
+   MenuFrame$1(MenuFrame var1) {
+      this.this$0 = var1;
+   }
+
+   public void actionPerformed(ActionEvent event) {
+      NumView numview = new NumView(MenuFrame.access$0(this.this$0));
+      if (MenuFrame.access$1(this.this$0).isEmpty()) {
+         this.this$0.setStartingStones();
+         MenuFrame.access$1(this.this$0).initializeStones(MenuFrame.access$2(this.this$0));
+      }
+
+      MenuFrame.access$1(this.this$0).addView(numview);
+   }
+}
