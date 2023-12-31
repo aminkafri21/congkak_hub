@@ -1,0 +1,236 @@
+package project;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Observable;
+import javax.swing.event.ChangeEvent;
+
+public class MancalaModel extends Observable {
+   int lastPlayer;
+   int lastButtonId;
+   private int[] p1board = new int[7];
+   private int[] p2board = new int[7];
+   private int[] reverseIndex = new int[7];
+   private int[] undoP1board = new int[7];
+   private int[] undoP2board = new int[7];
+   ArrayList<MancalaView> views;
+   public static final int PIT_SIZE = 6;
+   private boolean gameOver;
+   private boolean freemove;
+   private int undoCount = 0;
+   private boolean legalMove;
+
+   public MancalaModel() {
+      for(int i = 0; i < 6; ++i) {
+         this.reverseIndex[i] = 6 - i - 1;
+      }
+
+      this.reverseIndex[6] = 6;
+      this.views = new ArrayList();
+      this.gameOver = false;
+      this.legalMove = false;
+      this.lastPlayer = 1 + (int)Math.floor(Math.random() * 2.0D);
+   }
+
+   public int[] getp1board() {
+      return this.p1board;
+   }
+
+   public int[] getp2board() {
+      return this.p2board;
+   }
+
+   public void initializeStones(int starting_stones) {
+      Arrays.fill(this.p1board, 0, 6, starting_stones);
+      Arrays.fill(this.p2board, 0, 6, starting_stones);
+      this.p1board[6] = 0;
+      this.p2board[6] = 0;
+      this.gameOver = false;
+      this.notifyViews();
+   }
+
+   public void addView(MancalaView mview) {
+      this.views.add(mview);
+      this.notifyViews();
+   }
+
+   public void makeMove(int playerId, int buttonId) {
+      this.legalMove = false;
+      if (!this.gameOver) {
+         if (this.lastPlayer == playerId || (playerId != 1 || this.p1board[buttonId] != 0) && (playerId != 2 || this.p2board[buttonId] != 0)) {
+            if (playerId <= 2 && playerId >= 1) {
+               if (buttonId <= 6 && buttonId >= 0) {
+                  if (this.lastPlayer == playerId) {
+                     if (this.lastButtonId == buttonId && (this.lastPlayer == 1 && this.p1board[buttonId] == 0 || this.lastPlayer == 2 && this.p2board[buttonId] == 0)) {
+                        if (this.undoCount < 3) {
+                           System.arraycopy(this.undoP1board, 0, this.p1board, 0, this.p1board.length);
+                           System.arraycopy(this.undoP2board, 0, this.p2board, 0, this.p2board.length);
+                           ++this.undoCount;
+                           this.resetLastPlayer();
+                           this.notifyViews();
+                           this.freemove = true;
+                        }
+
+                     }
+                  } else {
+                     System.arraycopy(this.p1board, 0, this.undoP1board, 0, this.p1board.length);
+                     System.arraycopy(this.p2board, 0, this.undoP2board, 0, this.p2board.length);
+                     if (!this.freemove) {
+                        this.undoCount = 0;
+                     }
+
+                     this.freemove = false;
+                     this.lastPlayer = playerId;
+                     this.lastButtonId = buttonId;
+                     int moreStones;
+                     if (playerId == 1) {
+                        moreStones = this.p1board[buttonId];
+                        this.p1board[buttonId] = 0;
+                     } else {
+                        moreStones = this.p2board[buttonId];
+                        this.p2board[buttonId] = 0;
+                     }
+
+                     int currentPl = this.lastPlayer;
+                     int currentButton = this.lastButtonId;
+
+                     while(true) {
+                        do {
+                           if (moreStones <= 0) {
+                              if (currentPl == this.lastPlayer && currentButton < 6) {
+                                 this.checkCaptureMove(currentPl, currentButton);
+                              }
+
+                              this.checkWinningMove();
+                              if (!this.gameOver && currentPl == this.lastPlayer && currentButton == 6) {
+                                 this.resetLastPlayer();
+                              }
+
+                              this.notifyViews();
+                              if (!this.gameOver) {
+                                 this.legalMove = true;
+                              }
+
+                              return;
+                           }
+
+                           ++currentButton;
+                        } while(currentButton == 6 && currentPl != this.lastPlayer);
+
+                        if (currentButton == 7) {
+                           if (currentPl == 1) {
+                              currentPl = 2;
+                           } else {
+                              currentPl = 1;
+                           }
+
+                           currentButton = 0;
+                        }
+
+                        int var10002;
+                        if (currentPl == 1) {
+                           var10002 = this.p1board[currentButton]++;
+                        } else {
+                           var10002 = this.p2board[currentButton]++;
+                        }
+
+                        --moreStones;
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+
+   private void checkWinningMove() {
+      int board2sum = 0;
+      int board1sum = 0;
+
+      int i;
+      for(i = 0; i < 6; ++i) {
+         board1sum += this.p1board[i];
+         board2sum += this.p2board[i];
+      }
+
+      int[] var10000;
+      if (board1sum == 0) {
+         for(i = 0; i < 6; ++i) {
+            this.p2board[i] = 0;
+         }
+
+         var10000 = this.p2board;
+         var10000[6] += board2sum;
+         this.gameOver = true;
+      } else if (board2sum == 0) {
+         for(i = 0; i < 6; ++i) {
+            this.p1board[i] = 0;
+         }
+
+         var10000 = this.p1board;
+         var10000[6] += board1sum;
+         this.gameOver = true;
+      }
+
+   }
+
+   private void checkCaptureMove(int player, int pit) {
+      int[] var10000;
+      if (player == 1) {
+         if (this.p1board[pit] == 1 && this.p2board[this.reverseIndex[pit]] > 0) {
+            var10000 = this.p1board;
+            var10000[6] += 1 + this.p2board[this.reverseIndex[pit]];
+            this.p1board[pit] = 0;
+            this.p2board[this.reverseIndex[pit]] = 0;
+         }
+      } else if (player == 2 && this.p2board[pit] == 1 && this.p1board[this.reverseIndex[pit]] > 0) {
+         var10000 = this.p2board;
+         var10000[6] += 1 + this.p1board[this.reverseIndex[pit]];
+         this.p2board[pit] = 0;
+         this.p1board[this.reverseIndex[pit]] = 0;
+      }
+
+   }
+
+   public void notifyViews() {
+      Iterator var2 = this.views.iterator();
+
+      while(var2.hasNext()) {
+         MancalaView view = (MancalaView)var2.next();
+         view.stateChanged(new ChangeEvent(this));
+      }
+
+   }
+
+   public boolean isEmpty() {
+      return this.views.isEmpty();
+   }
+
+   public boolean isDone() {
+      return this.gameOver;
+   }
+
+   public boolean isLegalMove() {
+      return this.legalMove;
+   }
+
+   public int getCurrentPlayer() {
+      return this.lastPlayer == 1 ? 2 : 1;
+   }
+
+   private void resetLastPlayer() {
+      this.lastPlayer = this.lastPlayer == 1 ? 2 : 1;
+   }
+
+   public void resetGame() {
+      Iterator var2 = this.views.iterator();
+
+      while(var2.hasNext()) {
+         MancalaView view = (MancalaView)var2.next();
+         view.close();
+      }
+
+      this.views.clear();
+   }
+}

@@ -1,0 +1,18 @@
+package project;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class MancalaTest$1 implements ActionListener {
+   public void actionPerformed(ActionEvent event) {
+      MancalaModel model = new MancalaModel();
+      MancalaController controller = new MancalaController(model);
+      MancalaView numview = new NumView(controller);
+      model.addView(numview);
+      MancalaFrame mframe = new MancalaFrame(numview);
+      mframe.add(numview.getPanel());
+      mframe.setVisible(true);
+      mframe.setDefaultCloseOperation(2);
+      model.initializeStones(mframe.getNumStones());
+   }
+}
