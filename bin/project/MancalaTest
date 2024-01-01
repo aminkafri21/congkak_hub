@@ -1,4 +1,9 @@
+import java.applet.*;
+import java.awt.*;
+
 package project;
+
+public class Main extends Applet {
 
 public class MancalaTest {
    public static void main(String[] args) {
@@ -6,4 +11,5 @@ public class MancalaTest {
       MancalaController controller = new MancalaController(model);
       new MenuFrame(model, controller);
    }
+}
 }
